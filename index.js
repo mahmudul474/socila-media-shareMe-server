@@ -68,10 +68,34 @@ app.get("/users/:id", async (req, res)=>{
 app.get("/userabout",async (req, res)=>{
     const email=req.query.email;
     const query={email:email}
-    const result=await userColllections.find(query).toArray();
+    const result=await userColllections.findOne(query)
     res.send(result)
 
 })
+
+
+///uptadeuserinfo
+
+
+
+app.put("/userabout/:email",async(req,res)=>{
+    const email=req.params.email;
+    const about=req.body;
+     const filter={email:email}
+     const upsert={upsert:true}
+     const updoc={
+        $set:about
+        
+     }
+
+     const result=await userColllections.updateOne(filter,updoc,upsert);
+     res.send(result);
+
+console.log(result)
+
+})
+
+
 
 
 
