@@ -32,6 +32,7 @@ const run=async()=>{
         
        const userColllections=client.db("shareme").collection("users");
        const postcollection=client.db("shareme").collection("media")
+       const commentcollection=client.db("shareme").collection("comments");
     
 
 //post 
@@ -122,6 +123,22 @@ app.get("/allposts", async(req,res)=>{
     const result=await postcollection.find(query).toArray();
     res.send(result);
     
+})
+
+
+
+
+
+
+
+
+app.post("/coment",async (req,res)=>{
+const  coment=req.body;
+    const result=await commentcollection.insertOne(coment);
+    res.send(result);
+
+
+
 })
 
 
