@@ -31,6 +31,7 @@ const run=async()=>{
     try{
         
        const userColllections=client.db("shareme").collection("users");
+       const postcollection=client.db("shareme").collection("media")
     
 
 //post 
@@ -73,6 +74,13 @@ app.get("/userabout",async (req, res)=>{
 
 })
 
+// app.get("/user/about/:email",async(req, res) => {
+//     const email=req.params.email;
+//     const query={email:email}   
+//     const result=await userColllections.findOne(query)
+//     res.send(result)
+// })
+
 
 ///uptadeuserinfo
 
@@ -95,6 +103,26 @@ console.log(result)
 
 })
 
+ 
+
+
+//media post
+
+app.post("/post",async(req,res)=>{
+    const post=req.body;
+    const result=await postcollection.insertOne(post);
+    res.send(result);
+
+})
+
+
+//get all post 
+app.get("/allposts", async(req,res)=>{
+    const query={}
+    const result=await postcollection.find(query).toArray();
+    res.send(result);
+    
+})
 
 
 
