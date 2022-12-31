@@ -33,6 +33,7 @@ const run=async()=>{
        const userColllections=client.db("shareme").collection("users");
        const postcollection=client.db("shareme").collection("media")
        const commentcollection=client.db("shareme").collection("comments");
+       const likesCollection=client.db("shareme").collection("likes");
     
 
 //post 
@@ -96,16 +97,14 @@ app.put("/userabout/:email",async(req,res)=>{
         $set:about
         
      }
-
      const result=await userColllections.updateOne(filter,updoc,upsert);
      res.send(result);
 
-console.log(result)
+
 
 })
 
  
-
 
 //media post
 
@@ -126,6 +125,34 @@ app.get("/allposts", async(req,res)=>{
 })
 
 
+//like api
+
+
+app.post("/likes", async(req,res)=>{
+    const likes=req.body;
+    const result=await likesCollection.insertOne(likes);
+    res.send(result);
+
+    
+})
+
+
+// app.get("/likes", async(req,res)=>{
+
+//     const query={}
+//     const result=await likesCollection.find(query).toArray()
+//     res.send(result);
+//     console.log(result)
+
+
+// })
+
+app.get("/likes/:id", async(req,res)=>{
+    const id=req.params.id;
+    const query={postid:id}
+    const result=await likesCollection.find(query).toArray();
+    res.send(result);
+})
 
 
 
@@ -143,11 +170,6 @@ const  coment=req.body;
 
 
 
-
-
-
-
-
 //get all comments
 
 app.get("/comments", async (req,res)=>{
@@ -156,7 +178,7 @@ const result=await commentcollection.find(query).toArray();
 res.send(result);
    
 })
-
+///post wise comments by post id
 app.get("/comments/:id",async (req,res)=>{
     const  id=req.params.id;
     const query={postid:id};
@@ -164,6 +186,11 @@ app.get("/comments/:id",async (req,res)=>{
     res.send(result);
     
 })
+
+
+
+
+
 
 
 
