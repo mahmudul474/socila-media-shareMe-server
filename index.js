@@ -130,7 +130,7 @@ app.get("/allposts", async(req,res)=>{
 
 
 
-
+//post comment
 
 app.post("/coment",async (req,res)=>{
 const  coment=req.body;
@@ -140,6 +140,38 @@ const  coment=req.body;
 
 
 })
+
+
+
+
+
+
+
+
+//get all comments
+
+app.get("/comments", async (req,res)=>{
+const query={}
+const result=await commentcollection.find(query).toArray();
+res.send(result);
+   
+})
+
+app.get("/comments/:id",async (req,res)=>{
+    const  id=req.params.id;
+    const query={postid:id};
+    const result=await commentcollection.find(query).toArray();
+    res.send(result);
+    
+})
+
+
+
+
+
+
+
+
 
 
 
