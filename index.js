@@ -76,12 +76,12 @@ app.get("/userabout",async (req, res)=>{
 
 })
 
-// app.get("/user/about/:email",async(req, res) => {
-//     const email=req.params.email;
-//     const query={email:email}   
-//     const result=await userColllections.findOne(query)
-//     res.send(result)
-// })
+app.get("/user/about/:email",async(req, res) => {
+    const email=req.params.email;
+    const query={email:email}   
+    const result=await userColllections.findOne(query)
+    res.send(result)
+})
 
 
 ///uptadeuserinfo
@@ -125,6 +125,24 @@ app.get("/allposts", async(req,res)=>{
 })
 
 
+
+//get my post
+
+
+app.get("/posts",async(req,res)=>{
+    const email=req.query.email;
+    const query={email:email}
+    const result=await postcollection.find(query).toArray()
+    res.send(result);
+})
+
+
+
+
+
+
+
+
 //like api
 
 
@@ -137,15 +155,15 @@ app.post("/likes", async(req,res)=>{
 })
 
 
-// app.get("/likes", async(req,res)=>{
+app.get("/likes", async(req,res)=>{
 
-//     const query={}
-//     const result=await likesCollection.find(query).toArray()
-//     res.send(result);
-//     console.log(result)
+    const query={}
+    const result=await likesCollection.find(query).toArray()
+    res.send(result);
+    console.log(result)
 
 
-// })
+})
 
 app.get("/likes/:id", async(req,res)=>{
     const id=req.params.id;
