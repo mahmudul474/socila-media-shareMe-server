@@ -117,24 +117,28 @@ app.post("/post",async(req,res)=>{
 
 
 //get all post 
-app.get("/allposts", async(req,res)=>{
-    const query={}
-    const result=await postcollection.find(query).toArray();
-    res.send(result);
-    
-})
-
-
+app.get("/allposts", async (req, res) => {
+  const query = {};
+  const result = await postcollection.find(query).toArray();
+  res.send(result);
+});
 
 //get my post
 
+app.get("/posts", async (req, res) => {
+  const email = req.query.email;
+  const query = { email: email };
+  const result = await postcollection.find(query).toArray();
+  res.send(result);
+});
 
-app.get("/posts",async(req,res)=>{
-    const email=req.query.email;
-    const query={email:email}
-    const result=await postcollection.find(query).toArray()
-    res.send(result);
-})
+///get singel post
+app.get("/post/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const post = await postcollection.findOne(query);
+  res.send(post);
+});
 
 
 
@@ -204,24 +208,6 @@ app.get("/comments/:id",async (req,res)=>{
     res.send(result);
     
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
     finally{
